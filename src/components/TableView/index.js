@@ -48,7 +48,7 @@ export default class TableView extends Component {
 
     return (
       <div>
-        <h1>Table Order - {this.renderMenuReadyState(this.state.menuReadyState)}</h1>
+        <h1 className={styles.tableHeader}>Placing Order - {this.renderMenuReadyState(this.state.menuReadyState)}</h1>
         <div className={styles.orderCardContainer}>
           {
             order.map((items, customerNumber) => {
@@ -75,8 +75,8 @@ export default class TableView extends Component {
     const eventSourceURL = 'https://api.particle.io/v1/devices/380052000951343334363138/events?access_token=ca15d603cdd1b53d8a5170874a8e963647c1a8de'
     const orderStream = new EventSource(eventSourceURL)
     const streamEvents= {
-      UPDATE: 0,
-      SUBMIT: 1
+      UPDATE: '0',
+      SUBMIT: '1',
     }
     const tableView = this
 
@@ -86,17 +86,17 @@ export default class TableView extends Component {
       console.log('tableView.state.menuReadyState:', tableView.state.menuReadyState)
     }
 
-    orderStream.addEventListener(streamEvents.UPDATE, this.updateOrder)
-
-    orderStream.addEventListener(streamEvents.SUBMIT, this.submitOrder)
+    orderStream.addEventListener(streamEvents.UPDATE, (e) => this.updateOrder(e))
+    orderStream.addEventListener(streamEvents.SUBMIT, (e) => this.submitOrder(e))
   }
 
   updateOrder(e) {
     console.log('update event', e)
 
     const customerNumber = this.state.activeCustomer
-    const items = e.data.split(',').reduce((customerOrder, selected, itemID) => {
-      if(selected) {
+    const data = JSON.parse(e.data).data
+    const items = data.split(',').reduce((customerOrder, selected, itemID) => {
+      if(!!parseInt(selected)) {
         customerOrder.push(menu[itemID])
       }
       return customerOrder
@@ -107,6 +107,16 @@ export default class TableView extends Component {
   }
 
   submitOrder(e) {
-    this.setState({activeCustomer: activeCustomer++})
+    console.log('Submit event', e)
+    let orders = this.state.order.slice(0)
+    orders.push([])
+    console.log('this.state.activeCustomer:', this.state.activeCustomer)
+    const nextCustomer = this.state.activeCustomer + 1
+    console.log('this.state.activeCustomer:', this.state.activeCustomer)
+    console.log('nextCustomer:', nextCustomer)
+    this.setState({
+      activeCustomer: nextCustomer,
+      order: orders,
+    })
   }
 }
