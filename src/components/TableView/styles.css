@@ -1,0 +1,20 @@
+:local(.orderCardContainer) {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: space-around;
+}
+
+:local(.menuConnecting) {
+  color: firebrick;
+}
+
+:local(.menuReady) {
+  color: darkgreen;
+}
+
+:local(.menuSent) {
+  color: black;
+}

@@ -1,0 +1,31 @@
+:local(.orderCard) {
+  border: 1px solid gainsboro;
+  border-radius: 5px;
+  margin: 15px;
+  padding-bottom: 15px;
+  /* outline: 1px dotted gainsboro; */
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  width: 25%;
+  justify-content: space-around;
+
+  &> * {
+    /* outline: 1px dashed chartreuse; */
+  }
+}
+
+:local(.main) {
+  &> h2 {
+    margin: 15px 0;
+    color: blue;
+  }
+}
+
+:local(.checkMark) {
+  margin-top: auto;
+  margin-bottom: auto;
+  color: firebrick;
+}
