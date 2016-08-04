@@ -1,3 +1,9 @@
+:local(.tableHeader) {
+  text-align: center;
+  /* background-color: #ef4e42; */
+  /* color: gainsboro; */
+}
+
 :local(.orderCardContainer) {
   display: -webkit-flex;
   display: -moz-flex;
